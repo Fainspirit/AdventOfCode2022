@@ -10,26 +10,38 @@ namespace AdventOfCode2022
     {
         enum RPS
         {
-            Rock, Paper, Scissors
+            None, Rock, Paper, Scissors, None2 // Hack to deal with calc
         }
 
-        int Score (RPS me, RPS them)
+        int GetScore (RPS me, RPS them)
         {
             int score = 0;
 
             switch (me) {
                 case RPS.Rock:
                     {
+                        score += 1;
+                        if (them == RPS.Rock) { score += 3; }
+                        if (them == RPS.Scissors) { score += 6; }
                         break;
                     }
                 case RPS.Paper:
                     {
+                        score += 2;
+                        if (them == RPS.Paper) { score += 3; }
+                        if (them == RPS.Rock) { score += 6; }
                         break;
                     }
                 case RPS.Scissors:
                     {
+                        score += 3;
+                        if (them == RPS.Scissors) { score += 3; }
+                        if (them == RPS.Paper) { score += 6; }
                         break;
                     }
+                case RPS.None:
+                    Console.WriteLine("You played nothing aaaa");
+                    break;
             }
             return score;
         }
@@ -41,8 +53,56 @@ namespace AdventOfCode2022
 
             foreach (string line in lines)
             {
-                // parse RPS
+                if (string.IsNullOrEmpty(line))
+                    continue;
 
+                // parse RPS
+                char me = line[2];
+                char them = line[0];
+                RPS myShape = RPS.None;
+                RPS theirShape = RPS.None;
+
+                // Ver. 1
+                /*
+                switch (me)
+                {
+                    case 'X': myShape = RPS.Rock; break;
+                    case 'Y': myShape = RPS.Paper; break;
+                    case 'Z': myShape = RPS.Scissors; break;
+                }
+                */
+                switch (them)
+                {
+                    case 'A': theirShape = RPS.Rock; break;
+                    case 'B': theirShape = RPS.Paper; break;
+                    case 'C': theirShape = RPS.Scissors; break;
+                }
+                // Ver 2.
+                switch (me)
+                {
+                    case 'X': // lose
+                        {
+                            // 1 before in cycle
+                            myShape = theirShape - 1;
+                            if (myShape == RPS.None) myShape = RPS.Scissors;
+                            break;
+                        }
+                    case 'Y': // draw
+                        {
+                            // same
+                            myShape = theirShape;
+                            break;
+                        }
+                    case 'Z': // win
+                        {
+                            // 1 higher in cycle
+                            myShape = theirShape + 1;
+                            if (myShape == RPS.None2) myShape = RPS.Rock;
+                            break;
+                        }
+
+                }
+                totalScore += GetScore(myShape, theirShape);
                 // Get and add score
             }
 

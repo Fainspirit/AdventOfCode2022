@@ -2,7 +2,7 @@
 
 Day day = new 
 
-Day1();
+Day2();
 
 day.Run();
 
