@@ -50,11 +50,30 @@ namespace AdventOfCode2022
                 int source = int.Parse(values[3]);
                 int dest = int.Parse(values[5]);
 
+                // Part 1
+                /*
                 for (int i = 0; i < amount; i++)
                 {
                     char top = stacks[source - 1].Pop();
                     stacks[dest - 1].Push(top);
                 }
+                */
+
+                // Part 2
+                // Put them on bot then pop - double LIFO preserves order
+                Stack<char> movebot = new Stack<char>();
+                for (int i = 0; i < amount; i++)
+                {
+                    movebot.Push(stacks[source - 1].Pop());
+                }
+
+                for (int i = 0; i < amount; i++)
+                {
+                    stacks[dest - 1].Push(movebot.Pop());
+                }
+
+
+
             }
 
             // Display
