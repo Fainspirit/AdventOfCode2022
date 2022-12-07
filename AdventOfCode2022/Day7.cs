@@ -121,10 +121,10 @@ namespace AdventOfCode2022
             public List<File> files = new List<File>();
             public Dir parent;
 
-            public Dir(string name, Dir parent)
+            public Dir(string name, Dir? parent)
             {
                 this.name = name;
-                this.parent = parent;
+                this.parent = parent ?? this;
             }
 
             public int GetSize()
