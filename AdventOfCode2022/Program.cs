@@ -1,8 +1,9 @@
 ﻿using AdventOfCode2022;
 
 Day day = new 
-Day7
-();
+    
+    Day8
+    
+    ();
 
 day.Run();
-
